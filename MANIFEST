@@ -1,10 +1,8 @@
 Build.PL
 Changes
-MANIFEST
-Makefile.PL
-README
 lib/URI/Encode.pm
-t/00.load.t
-t/perlcritic.t
-t/pod-coverage.t
-t/pod.t
+Makefile.PL
+MANIFEST
+README
+t/00_basic.t
+META.yml
