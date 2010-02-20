@@ -3,6 +3,6 @@ Changes
 lib/URI/Encode.pm
 Makefile.PL
 MANIFEST
+META.yml
 README
 t/00_basic.t
-META.yml

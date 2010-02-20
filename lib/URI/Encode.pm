@@ -5,7 +5,7 @@ use strict;
 use Carp;
 use Encode qw();
 
-our $VERSION = 0.01;
+our $VERSION = 0.02;
 
 ## Exporter
 use base qw(Exporter);
@@ -88,7 +88,7 @@ URI::Encode - Simple URI Encoding/Decoding
 
 =head1 VERSION
 
-This document describes URI::Encode version 0.0.1
+This document describes URI::Encode version 0.02
 
 =head1 SYNOPSIS
 
@@ -152,9 +152,9 @@ See L</decode($url)>
 =head2 Reserved Characters
 
 The following characters are considered as reserved (L<RFC
-3986|http://tools.ietf.org/html/rfc3986>)
+3986|http://tools.ietf.org/html/rfc3986>). They will be encoded only if requested.
 
-	 - _ . ~ ! * ' ( ) ; : @ & = + $ , / ? % # [ ]
+	 ! * ' ( ) ; : @ & = + $ , / ? % # [ ]
 
 =head2 Unreserved Characters
 
@@ -169,11 +169,21 @@ The following characters are considered as Unreserved. They will not be encoded
 
 L<Encode>
 
+=head1 ACKNOWLEDGEMENTS
+
+Gisle Aas for L<URI::Escape>
+
+David Nicol for L<Tie::UrlEncoder>
+
 =head1 SEE ALSO
 
 L<RFC 3986|http://tools.ietf.org/html/rfc3986>
 
 L<URI::Escape>
+
+L<URI::Escape::XS>
+
+L<URI::Escape::JavaScript>
 
 L<Tie::UrlEncoder>
 

@@ -9,3 +9,4 @@ CVS
 \.tmp$
 ignore.txt
 \.DS_Store$
+^MYMETA.yml$
