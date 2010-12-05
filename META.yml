@@ -4,7 +4,7 @@ author:
   - 'Mithun Ayachit <mithun@cpan.org>'
 configure_requires:
   Module::Build: 0.36
-generated_by: 'Module::Build version 0.3603'
+generated_by: 'Module::Build version 0.3607'
 license: perl
 meta-spec:
   url: http://module-build.sourceforge.net/META-spec-v1.4.html
@@ -13,13 +13,14 @@ name: URI-Encode
 provides:
   URI::Encode:
     file: lib/URI/Encode.pm
-    version: 0.02
+    version: 0.03
 requires:
   Encode: 2.12
   Test::More: 0
+  perl: v5.8.1
   version: 0
 resources:
   homepage: http://search.cpan.org/dist/URI-Encode/
   license: http://dev.perl.org/licenses/
   repository: http://github.com/mithun/perl-uri-encode
-version: 0.02
+version: 0.03
