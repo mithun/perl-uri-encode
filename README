@@ -6,7 +6,7 @@
 
 ==== VERSION ====
 
-    This document describes URI::Encode version 0.03
+    This document describes URI::Encode version 0.04
 
 
 ==== SYNOPSIS ====
@@ -25,8 +25,16 @@
 
 ==== DESCRIPTION ====
 
-    This modules provides simple URI (Percent) encoding/decoding. This
-    module borrows from URI::Escape, but 'tinier'
+    This modules provides simple URI (Percent) encoding/decoding
+
+    The main purpose of this module (at least for me) was to provide an easy
+    method to encode strings (mainly URLs) into a format which can be pasted
+    into a plain text emails, and that those links are 'click-able' by the
+    person reading that email. This can be accomplished by NOT encoding the
+    reserved characters.
+
+    If you are looking for speed and want to encode reserved characters, use
+    URI::Escape::XS
 
 
 ==== METHODS ====
@@ -34,16 +42,24 @@
 
 ==   new()   ==
 
-    Creates a new object, no argumetns are required
+    Creates a new object, no arguments are required
 
-            my $encoder = URI::Encode->new();
+            my $encoder = URI::Encode->new(\%options);
+
+    The following options can be passed to the constructor
+
+:   encode_reserved
+                my $encoder = URI::Encode->new({encode_reserved => 0});
+
+        If true, "Reserved Characters" are also encoded. Defaults to false.
 
 
 ==   encode($url, $including_reserved)   ==
 
     This method encodes the URL provided. The method does not encode any
-    "Reserved Characters" unless $including_reserved is true. The $url
-    provided is first converted into UTF-8 before percent encoding.
+    "Reserved Characters" unless $including_reserved is true or set in the
+    constructor. The $url provided is first converted into UTF-8 before
+    percent encoding.
 
             $uri->encode("http://perl.com/foo bar");      # http://perl.com/foo%20bar
             $uri->encode("http://perl.com/foo bar", 1);   # http%3A%2F%2Fperl.com%2Ffoo%20bar
@@ -144,28 +160,4 @@
 
     This module is free software; you can redistribute it and/or modify it
     under the same terms as Perl itself. See perlartistic.
-
-
-==== DISCLAIMER OF WARRANTY ====
-
-    BECAUSE THIS SOFTWARE IS LICENSED FREE OF CHARGE, THERE IS NO WARRANTY
-    FOR THE SOFTWARE, TO THE EXTENT PERMITTED BY APPLICABLE LAW. EXCEPT WHEN
-    OTHERWISE STATED IN WRITING THE COPYRIGHT HOLDERS AND/OR OTHER PARTIES
-    PROVIDE THE SOFTWARE "AS IS" WITHOUT WARRANTY OF ANY KIND, EITHER
-    EXPRESSED OR IMPLIED, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
-    WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE. THE
-    ENTIRE RISK AS TO THE QUALITY AND PERFORMANCE OF THE SOFTWARE IS WITH
-    YOU. SHOULD THE SOFTWARE PROVE DEFECTIVE, YOU ASSUME THE COST OF ALL
-    NECESSARY SERVICING, REPAIR, OR CORRECTION.
-
-    IN NO EVENT UNLESS REQUIRED BY APPLICABLE LAW OR AGREED TO IN WRITING
-    WILL ANY COPYRIGHT HOLDER, OR ANY OTHER PARTY WHO MAY MODIFY AND/OR
-    REDISTRIBUTE THE SOFTWARE AS PERMITTED BY THE ABOVE LICENCE, BE LIABLE
-    TO YOU FOR DAMAGES, INCLUDING ANY GENERAL, SPECIAL, INCIDENTAL, OR
-    CONSEQUENTIAL DAMAGES ARISING OUT OF THE USE OR INABILITY TO USE THE
-    SOFTWARE (INCLUDING BUT NOT LIMITED TO LOSS OF DATA OR DATA BEING
-    RENDERED INACCURATE OR LOSSES SUSTAINED BY YOU OR THIRD PARTIES OR A
-    FAILURE OF THE SOFTWARE TO OPERATE WITH ANY OTHER SOFTWARE), EVEN IF
-    SUCH HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH
-    DAMAGES.
 

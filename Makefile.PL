@@ -17,7 +17,7 @@ WriteMakefile(
     LICENSE    => 'perl',
     META_MERGE => {
         resources => {
-            homepage   => 'http://search.cpan.org/dist/URI-Encode/',
+            homepage   => 'https://metacpan.org/module/URI::Encode',
             repository => 'http://github.com/mithun/perl-uri-encode',
         },
     },

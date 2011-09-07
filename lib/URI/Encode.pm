@@ -1,12 +1,12 @@
 package URI::Encode;
 
+# Modules used
 use 5.008001;
 use warnings;
 use strict;
-use Carp;
 use Encode qw();
 
-our $VERSION = 0.03;
+our $VERSION = 0.04;
 
 ## Exporter
 use base qw(Exporter);
@@ -17,14 +17,21 @@ our @EXPORT_OK = qw(uri_encode uri_decode);
 # Constructor
 sub new {
     my $class = shift;
-    my $self = bless {}, $class;
+    my $self = bless { encode_reserved => 0, }, $class;
     return $self;
 }
 
 # Encode
 sub encode {
     my ( $self, $url, $encode_reserved ) = @_;
-    return unless $url;
+
+    # Allow $url to be '0'
+    return unless defined $url;
+
+    # Use setting from object initialization if not provided for this call
+    if ( not defined $encode_reserved ) {
+        $encode_reserved = $self->{encode_reserved};
+    }
 
     # Encode URL into UTF-8
     $url = Encode::encode( 'utf-8-strict', $url );
@@ -34,7 +41,7 @@ sub encode {
 
     # Create Regex
     my $reserved =
-      qr{([^a-zA-Z0-9\-\_\.\~\!\*\'\(\)\;\:\@\&\=\+\$\,\/\?\%\#\[\]])}x;
+        qr{([^a-zA-Z0-9\-\_\.\~\!\*\'\(\)\;\:\@\&\=\+\$\,\/\?\%\#\[\]])}x;
     my $unreserved = qr{([^a-zA-Z0-9\Q-_.~\E])}x;
 
     # Percent Encode URL
@@ -46,12 +53,14 @@ sub encode {
     }
 
     return $url;
-}
+} ## end sub encode
 
 # Decode
 sub decode {
     my ( $shift, $url ) = @_;
-    return unless $url;
+
+    # Allow $url to be '0'
+    return unless defined $url;
 
     # Character map
     my %map = map { sprintf( "%02X", $_ ) => chr($_) } ( 0 ... 255 );
@@ -59,7 +68,7 @@ sub decode {
     # Decode percent encoding
     $url =~ s/%([a-fA-F0-9]{2})/$map{$1}/gx;
     return $url;
-}
+} ## end sub decode
 
 ## Traditional Interface
 
@@ -89,7 +98,7 @@ URI::Encode - Simple URI Encoding/Decoding
 
 =head1 VERSION
 
-This document describes URI::Encode version 0.03
+This document describes URI::Encode version 0.04
 
 =head1 SYNOPSIS
 
@@ -106,22 +115,42 @@ This document describes URI::Encode version 0.03
 
 =head1 DESCRIPTION
 
-This modules provides simple URI (Percent) encoding/decoding. This module
-borrows from L<URI::Escape>, but 'tinier'
+This modules provides simple URI (Percent) encoding/decoding
+
+The main purpose of this module (at least for me) was to provide an easy method
+to encode strings (mainly URLs) into a format which can be pasted into a plain
+text emails, and that those links are 'click-able' by the person reading that
+email. This can be accomplished by NOT encoding the reserved characters.
+
+If you are looking for speed and want to encode reserved characters, use
+L<URI::Escape::XS>
 
 =head1 METHODS
 
 =head2 new()
 
-Creates a new object, no argumetns are required
+Creates a new object, no arguments are required
 
-	my $encoder = URI::Encode->new();
+	my $encoder = URI::Encode->new(\%options);
+
+The following options can be passed to the constructor
+
+=over
+
+=item encode_reserved
+
+	my $encoder = URI::Encode->new({encode_reserved => 0});
+
+If true, L</"Reserved Characters"> are also encoded. Defaults to false.
+
+=back
 
 =head2 encode($url, $including_reserved)
 
 This method encodes the URL provided. The method does not encode any
-L</"Reserved Characters"> unless C<$including_reserved> is true. The $url
-provided is first converted into UTF-8 before percent encoding.
+L</"Reserved Characters"> unless C<$including_reserved> is true or set in the
+constructor. The $url provided is first converted into UTF-8 before percent
+encoding.
 
 	$uri->encode("http://perl.com/foo bar");      # http://perl.com/foo%20bar
 	$uri->encode("http://perl.com/foo bar", 1);   # http%3A%2F%2Fperl.com%2Ffoo%20bar
@@ -153,7 +182,8 @@ See L</decode($url)>
 =head2 Reserved Characters
 
 The following characters are considered as reserved (L<RFC
-3986|http://tools.ietf.org/html/rfc3986>). They will be encoded only if requested.
+3986|http://tools.ietf.org/html/rfc3986>). They will be encoded only if
+requested.
 
 	 ! * ' ( ) ; : @ & = + $ , / ? % # [ ]
 
@@ -206,25 +236,4 @@ reserved.
 
 This module is free software; you can redistribute it and/or modify it under
 the same terms as Perl itself. See L<perlartistic>.
-
-=head1 DISCLAIMER OF WARRANTY
-
-BECAUSE THIS SOFTWARE IS LICENSED FREE OF CHARGE, THERE IS NO WARRANTY FOR THE
-SOFTWARE, TO THE EXTENT PERMITTED BY APPLICABLE LAW. EXCEPT WHEN OTHERWISE
-STATED IN WRITING THE COPYRIGHT HOLDERS AND/OR OTHER PARTIES PROVIDE THE
-SOFTWARE "AS IS" WITHOUT WARRANTY OF ANY KIND, EITHER EXPRESSED OR IMPLIED,
-INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND
-FITNESS FOR A PARTICULAR PURPOSE. THE ENTIRE RISK AS TO THE QUALITY AND
-PERFORMANCE OF THE SOFTWARE IS WITH YOU. SHOULD THE SOFTWARE PROVE DEFECTIVE,
-YOU ASSUME THE COST OF ALL NECESSARY SERVICING, REPAIR, OR CORRECTION.
-
-IN NO EVENT UNLESS REQUIRED BY APPLICABLE LAW OR AGREED TO IN WRITING WILL ANY
-COPYRIGHT HOLDER, OR ANY OTHER PARTY WHO MAY MODIFY AND/OR REDISTRIBUTE THE
-SOFTWARE AS PERMITTED BY THE ABOVE LICENCE, BE LIABLE TO YOU FOR DAMAGES,
-INCLUDING ANY GENERAL, SPECIAL, INCIDENTAL, OR CONSEQUENTIAL DAMAGES ARISING
-OUT OF THE USE OR INABILITY TO USE THE SOFTWARE (INCLUDING BUT NOT LIMITED TO
-LOSS OF DATA OR DATA BEING RENDERED INACCURATE OR LOSSES SUSTAINED BY YOU OR
-THIRD PARTIES OR A FAILURE OF THE SOFTWARE TO OPERATE WITH ANY OTHER SOFTWARE),
-EVEN IF SUCH HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH
-DAMAGES.
 

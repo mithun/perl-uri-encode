@@ -10,3 +10,4 @@ CVS
 ignore.txt
 \.DS_Store$
 ^MYMETA.yml$
+^MYMETA\.json$
