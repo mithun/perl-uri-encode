@@ -3,6 +3,10 @@
 
 ---------------------
 
+# 0.06
+
+- Fixed synopsis
+
 # 0.05
 
 - Store character maps in object

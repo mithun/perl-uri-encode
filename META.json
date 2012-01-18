@@ -35,7 +35,7 @@
    "provides" : {
       "URI::Encode" : {
          "file" : "lib/URI/Encode.pm",
-         "version" : "0.05"
+         "version" : "0.06"
       }
    },
    "release_status" : "stable",
@@ -51,5 +51,5 @@
          "url" : "git://github.com/mithun/perl-uri-encode.git"
       }
    },
-   "version" : "0.05"
+   "version" : "0.06"
 }

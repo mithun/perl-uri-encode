@@ -12,7 +12,7 @@ use Carp qw(croak carp);
 #######################
 # VERSION
 #######################
-our $VERSION = '0.05';
+our $VERSION = '0.06';
 
 #######################
 # EXPORT
@@ -135,11 +135,16 @@ URI::Encode - Simple percent Encoding/Decoding
 
 =head1 SYNOPSIS
 
-# OOP Interface use URI::Encode; my $uri = URI::Encode->new({encode_reserved =>
-0}); my $encoded = $uri->encode($data); my $decoded = $uri->decode($encoded);
+    # OOP Interface
+    use URI::Encode;
+    my $uri = URI::Encode->new({encode_reserved =>0});
+    my $encoded = $uri->encode($data);
+    my $decoded = $uri->decode($encoded);
 
-# Functional use URI::Encode qw(uri_encode uri_decode); my $encoded =
-uri_encode($data); my $decoded = uri_decode($encoded);
+    # Functional
+    use URI::Encode qw(uri_encode uri_decode);
+    my $encoded = uri_encode($data);
+    my $decoded = uri_decode($encoded);
 
 =head1 DESCRIPTION
 

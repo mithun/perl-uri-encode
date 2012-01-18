@@ -1,15 +1,19 @@
--------------------------------------
 # NAME
 
 URI::Encode - Simple percent Encoding/Decoding
 
 # SYNOPSIS
 
-# OOP Interface use URI::Encode; my $uri = URI::Encode->new({encode_reserved =>
-0}); my $encoded = $uri->encode($data); my $decoded = $uri->decode($encoded);
+    # OOP Interface
+    use URI::Encode;
+    my $uri = URI::Encode->new({encode_reserved =>0});
+    my $encoded = $uri->encode($data);
+    my $decoded = $uri->decode($encoded);
 
-# Functional use URI::Encode qw(uri_encode uri_decode); my $encoded =
-uri_encode($data); my $decoded = uri_decode($encoded);
+    # Functional
+    use URI::Encode qw(uri_encode uri_decode);
+    my $encoded = uri_encode($data);
+    my $decoded = uri_decode($encoded);
 
 # DESCRIPTION
 
@@ -127,4 +131,3 @@ Copyright (c) 2012, Mithun Ayachit. All rights reserved.
 
 This module is free software; you can redistribute it and/or modify it under
 the same terms as Perl itself. See [perlartistic](http://search.cpan.org/perldoc?perlartistic).
--------------------------------------
