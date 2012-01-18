@@ -1,163 +1,172 @@
+  -------------------------------------
+  # NAME
 
-==== NAME ====
+  URI::Encode - Simple percent
+  Encoding/Decoding
 
-    URI::Encode - Simple URI Encoding/Decoding
+  # SYNOPSIS
 
+  # OOP Interface use URI::Encode; my
+  $uri =
+  URI::Encode->new({encode_reserved =>
+  0}); my $encoded = uri->encode(data);
+  my $decoded = uri->decode(encoded);
 
-==== VERSION ====
+  # Functional use URI::Encode
+  qw(uri_encode uri_decode); my
+  encoded = uri_encode(data); my
+  decoded = uri_decode(encoded);
 
-    This document describes URI::Encode version 0.04
+  # DESCRIPTION
 
+  This modules provides simple URI
+  (Percent) encoding/decoding
 
-==== SYNOPSIS ====
+  The main purpose of this module (at
+  least for me) was to provide an easy
+  method to encode strings (mainly
+  URLs) into a format which can be
+  pasted into a plain text emails, and
+  that those links are 'click-able' by
+  the person reading that email. This
+  can be accomplished by NOT encoding
+  the reserved characters.
 
-            ## OO Interface
-            use URI::Encode;
-            my $uri = URI::Encode->new();
-            my $encoded = $uri->encode($url);
-            my $decoded = $uri->decode($encoded);
+  If you are looking for speed and want
+  to encode reserved characters, use
+  URI::Escape::XS
 
-            ## Using exported functions
-            use URI::Encode qw(uri_encode uri_decode);
-            my $encoded = uri_encode($url);
-            my $decoded = uri_decode($url);
+  # METHODS
 
+  ## new()
 
-==== DESCRIPTION ====
+  Creates a new object, no arguments
+  are required
 
-    This modules provides simple URI (Percent) encoding/decoding
+  my $encoder =
+  URI::Encode->new(%options);
 
-    The main purpose of this module (at least for me) was to provide an easy
-    method to encode strings (mainly URLs) into a format which can be pasted
-    into a plain text emails, and that those links are 'click-able' by the
-    person reading that email. This can be accomplished by NOT encoding the
-    reserved characters.
+  The following options can be passed
+  to the constructor
 
-    If you are looking for speed and want to encode reserved characters, use
-    URI::Escape::XS
+  - encode_reserved
 
+  my $encoder =
+  URI::Encode->new({encode_reserved =>
+  0});
 
-==== METHODS ====
+  If true, "Reserved Characters" are
+  also encoded. Defaults to false.
 
+  ## encode($url, $including_reserved)
 
-==   new()   ==
+  This method encodes the URL provided.
+  The method does not encode any
+  "Reserved Characters" unless
+  $including_reserved is true or set in
+  the constructor. The $url provided is
+  first converted into UTF-8 before
+  percent encoding.
 
-    Creates a new object, no arguments are required
+  $uri->encode("http://perl.com/foo
+  bar"); # http://perl.com/foo%20bar
+  $uri->encode("http://perl.com/foo
+  bar", 1); #
+  http%3A%2F%2Fperl.com%2Ffoo%20bar
 
-            my $encoder = URI::Encode->new(\%options);
+  ## decode($url)
 
-    The following options can be passed to the constructor
+  This method decodes a 'percent'
+  encoded URL. If you had encoded the
+  URL using this module (or any other
+  method), chances are that the URL was
+  converted to UTF-8 before 'percent'
+  encoding. Be sure to check the format
+  and convert back if required.
 
-:   encode_reserved
-                my $encoder = URI::Encode->new({encode_reserved => 0});
+  $uri->decode("http%3A%2F%2Fperl.com%2
+  Ffoo%20bar");
+  # "http://perl.com/foo bar"
 
-        If true, "Reserved Characters" are also encoded. Defaults to false.
+  # EXPORTED FUNCTIONS
 
+  The following functions are exported
+  upon request. This provides a non-OOP
+  interface
 
-==   encode($url, $including_reserved)   ==
+  ## uri_encode($url,
+  $including_reserved)
 
-    This method encodes the URL provided. The method does not encode any
-    "Reserved Characters" unless $including_reserved is true or set in the
-    constructor. The $url provided is first converted into UTF-8 before
-    percent encoding.
+  See ["encode($url,
+  including_reserved)"](#encode(url,
+  $including_reserved))
 
-            $uri->encode("http://perl.com/foo bar");      # http://perl.com/foo%20bar
-            $uri->encode("http://perl.com/foo bar", 1);   # http%3A%2F%2Fperl.com%2Ffoo%20bar
+  ## uri_decode($url)
 
+  See ["decode(url)"](#decode(url))
 
-==   decode($url)   ==
+  # CHARACTER CLASSES
 
-    This method decodes a 'percent' encoded URL. If you had encoded the URL
-    using this module (or any other method), chances are that the URL was
-    converted to UTF-8 before 'percent' encoding. Be sure to check the
-    format and convert back if required.
+  ## Reserved Characters
 
-            $uri->decode("http%3A%2F%2Fperl.com%2Ffoo%20bar"); # "http://perl.com/foo bar"
+  The following characters are
+  considered as reserved (RFC 3986).
+  They will be encoded only if
+  requested.
 
+  ! * ' ( ) ; : @ & = + $ , / ? % # [ ]
 
-==== EXPORTED FUNCTIONS ====
+  ## Unreserved Characters
 
-    The following functions are exported upon request. This provides a
-    non-OOP interface
+  The following characters are
+  considered as Unreserved. They will
+  not be encoded
 
+  a-z A-Z 0-9 - _ . ~
 
-==   uri_encode($url, $including_reserved)   ==
+  # DEPENDENCIES
 
-    See "encode($url, $including_reserved)"
+  Encode
 
+  # ACKNOWLEDGEMENTS
 
-==   uri_decode($url)   ==
+  Gisle Aas for URI::Escape
 
-    See "decode($url)"
+  David Nicol for Tie::UrlEncoder
 
+  # SEE ALSO
 
-==== CHARACTER CLASSES ====
+  RFC 3986
 
+  URI::Escape
 
-==   Reserved Characters   ==
+  URI::Escape::XS
 
-    The following characters are considered as reserved (RFC 3986
-    <http://tools.ietf.org/html/rfc3986>). They will be encoded only if
-    requested.
+  URI::Escape::JavaScript
 
-             ! * ' ( ) ; : @ & = + $ , / ? % # [ ]
+  Tie::UrlEncoder
 
+  # BUGS AND LIMITATIONS
 
-==   Unreserved Characters   ==
+  Please report any bugs or feature
+  requests to
+  bug-uri-encode@rt.cpan.org, or
+  through the web interface at
+  http://rt.cpan.org/Public/Dist/Displa
+  y.html?Name=URI-Encode
 
-    The following characters are considered as Unreserved. They will not be
-    encoded
+  # AUTHOR
 
-            a-z
-            A-Z
-            0-9
-            - _ . ~
+  Mithun Ayachit mithun@cpan.org
 
+  # LICENSE AND COPYRIGHT
 
-==== DEPENDENCIES ====
+  Copyright (c) 2012, Mithun Ayachit.
+  All rights reserved.
 
-    Encode
-
-
-==== ACKNOWLEDGEMENTS ====
-
-    Gisle Aas for URI::Escape
-
-    David Nicol for Tie::UrlEncoder
-
-
-==== SEE ALSO ====
-
-    RFC 3986 <http://tools.ietf.org/html/rfc3986>
-
-    URI::Escape
-
-    URI::Escape::XS
-
-    URI::Escape::JavaScript
-
-    Tie::UrlEncoder
-
-
-==== BUGS AND LIMITATIONS ====
-
-    No bugs have been reported.
-
-    Please report any bugs or feature requests to
-    ``bug-uri-encode@rt.cpan.org'', or through the web interface at
-    <http://rt.cpan.org>.
-
-
-==== AUTHOR ====
-
-    Mithun Ayachit ``<mithun@cpan.org>''
-
-
-==== LICENCE AND COPYRIGHT ====
-
-    Copyright (c) 2010, Mithun Ayachit ``<mithun@cpan.org>''. All rights
-    reserved.
-
-    This module is free software; you can redistribute it and/or modify it
-    under the same terms as Perl itself. See perlartistic.
+  This module is free software; you can
+  redistribute it and/or modify it
+  under the same terms as Perl itself.
+  See perlartistic.
+  -------------------------------------
 

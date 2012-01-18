@@ -1,117 +1,145 @@
 package URI::Encode;
 
-# Modules used
-use 5.008001;
-use warnings;
+#######################
+# LOAD MODULES
+#######################
 use strict;
+use warnings FATAL => 'all';
+use 5.008001;
 use Encode qw();
+use Carp qw(croak carp);
 
-our $VERSION = 0.04;
+#######################
+# VERSION
+#######################
+our $VERSION = '0.05';
 
-## Exporter
+#######################
+# EXPORT
+#######################
 use base qw(Exporter);
-our @EXPORT_OK = qw(uri_encode uri_decode);
+our (@EXPORT_OK);
 
-## OOP Intrerface
+@EXPORT_OK = qw(uri_encode uri_decode);
 
-# Constructor
+#######################
+# SETTINGS
+#######################
+
+# Reserved characters
+my $reserved_re =
+    qr{([^a-zA-Z0-9\-\_\.\~\!\*\'\(\)\;\:\@\&\=\+\$\,\/\?\%\#\[\]])}x;
+
+# Un-reserved characters
+my $unreserved_re = qr{([^a-zA-Z0-9\Q-_.~\E])}x;
+
+# Encoded character set
+my $encoded_chars = qr{%([a-fA-F0-9]{2})}x;
+
+#######################
+# CONSTRUCTOR
+#######################
 sub new {
-    my $class = shift;
-    my $self = bless { encode_reserved => 0, }, $class;
+    my ( $class, @in ) = @_;
+
+    # Check Input
+    my $input = {
+
+        #   this module, unlike URI::Escape,
+        #   does not encode reserved characters
+        encode_reserved => 0,
+    };
+    if   ( ref $in[0] eq 'HASH' ) { $input = $in[0]; }
+    else                          { $input = {@in}; }
+
+    # Encoding Map
+    $input->{enc_map} =
+        { ( map { chr($_) => sprintf( "%%%02X", $_ ) } ( 0 ... 255 ) ) };
+
+    # Decoding Map
+    $input->{dec_map} =
+        { ( map { sprintf( "%02X", $_ ) => chr($_) } ( 0 ... 255 ) ) };
+
+    # Return
+    my $self = bless $input, $class;
     return $self;
-}
+} ## end sub new
 
-# Encode
+#######################
+# ENCODE
+#######################
 sub encode {
-    my ( $self, $url, $encode_reserved ) = @_;
+    my ( $self, $data, $reserved_flag ) = @_;
 
-    # Allow $url to be '0'
-    return unless defined $url;
+    # Check for data
+    # Allow to be '0'
+    return unless defined $data;
 
-    # Use setting from object initialization if not provided for this call
-    if ( not defined $encode_reserved ) {
-        $encode_reserved = $self->{encode_reserved};
-    }
+    # Encode reserved?
+    my $enc_res = $reserved_flag || $self->{encode_reserved};
 
-    # Encode URL into UTF-8
-    $url = Encode::encode( 'utf-8-strict', $url );
+    # UTF-8 encode
+    $data = Encode::encode( 'utf-8-strict', $data );
 
-    # Create character map
-    my %map = map { chr($_) => sprintf( "%%%02X", $_ ) } ( 0 ... 255 );
-
-    # Create Regex
-    my $reserved =
-        qr{([^a-zA-Z0-9\-\_\.\~\!\*\'\(\)\;\:\@\&\=\+\$\,\/\?\%\#\[\]])}x;
-    my $unreserved = qr{([^a-zA-Z0-9\Q-_.~\E])}x;
-
-    # Percent Encode URL
-    if ($encode_reserved) {
-        $url =~ s/$unreserved/$map{$1}/gx;
+    # Percent Encode
+    if ($enc_res) {
+        $data =~ s{$unreserved_re}{$self->{enc_map}->{$1}}gx;
     }
     else {
-        $url =~ s/$reserved/$map{$1}/gx;
+        $data =~ s{$reserved_re}{$self->{enc_map}->{$1}}gx;
     }
 
-    return $url;
+    # Done
+    return $data;
 } ## end sub encode
 
-# Decode
+#######################
+# DECODE
+#######################
 sub decode {
-    my ( $shift, $url ) = @_;
+    my ( $self, $data ) = @_;
 
-    # Allow $url to be '0'
-    return unless defined $url;
+    # Check for data
+    # Allow to be '0'
+    return unless defined $data;
 
-    # Character map
-    my %map = map { sprintf( "%02X", $_ ) => chr($_) } ( 0 ... 255 );
+    # Percent Decode
+    $data =~ s{$encoded_chars}{$self->{dec_map}->{$1}}gx;
 
-    # Decode percent encoding
-    $url =~ s/%([a-fA-F0-9]{2})/$map{$1}/gx;
-    return $url;
+    return $data;
 } ## end sub decode
 
-## Traditional Interface
+#######################
+# EXPORTED FUNCTIONS
+#######################
 
-# Encode
-sub uri_encode {
-    my ( $url, $flag ) = @_;
-    my $uri = URI::Encode->new();
-    return $uri->encode( $url, $flag );
-}
+# Encoder
+sub uri_encode { return __PACKAGE__->new()->encode(@_); }
 
-# Decode
-sub uri_decode {
-    my ($url) = @_;
-    my $uri = URI::Encode->new();
-    return $uri->decode($url);
-}
+# Decoder
+sub uri_decode { return __PACKAGE__->new()->decode(@_); }
 
-## Done
+#######################
 1;
+
 __END__
 
+#######################
+# POD SECTION
+#######################
 =pod
 
 =head1 NAME
 
-URI::Encode - Simple URI Encoding/Decoding
-
-=head1 VERSION
-
-This document describes URI::Encode version 0.04
+URI::Encode - Simple percent Encoding/Decoding
 
 =head1 SYNOPSIS
 
-	## OO Interface
-	use URI::Encode;
-	my $uri = URI::Encode->new();
-	my $encoded = $uri->encode($url);
-	my $decoded = $uri->decode($encoded);
+# OOP Interface use URI::Encode; my $uri = URI::Encode->new({encode_reserved =>
+0}); my $encoded = $uri->encode($data); my $decoded = $uri->decode($encoded);
 
-	## Using exported functions
-	use URI::Encode qw(uri_encode uri_decode);
-	my $encoded = uri_encode($url);
-	my $decoded = uri_decode($url);
+# Functional use URI::Encode qw(uri_encode uri_decode); my $encoded =
+uri_encode($data); my $decoded = uri_decode($encoded);
 
 =head1 DESCRIPTION
 
@@ -220,20 +248,19 @@ L<Tie::UrlEncoder>
 
 =head1 BUGS AND LIMITATIONS
 
-No bugs have been reported.
-
 Please report any bugs or feature requests to C<bug-uri-encode@rt.cpan.org>, or
-through the web interface at L<http://rt.cpan.org>.
+through the web interface at
+L<http://rt.cpan.org/Public/Dist/Display.html?Name=URI-Encode>
 
 =head1 AUTHOR
 
-Mithun Ayachit  C<< <mithun@cpan.org> >>
+Mithun Ayachit C<mithun@cpan.org>
 
-=head1 LICENCE AND COPYRIGHT
+=head1 LICENSE AND COPYRIGHT
 
-Copyright (c) 2010, Mithun Ayachit C<< <mithun@cpan.org> >>. All rights
-reserved.
+Copyright (c) 2012, Mithun Ayachit. All rights reserved.
 
 This module is free software; you can redistribute it and/or modify it under
 the same terms as Perl itself. See L<perlartistic>.
 
+=cut

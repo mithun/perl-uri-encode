@@ -1,12 +1,14 @@
 ---
-abstract: 'Simple URI Encoding/Decoding'
+abstract: 'Simple percent Encoding/Decoding'
 author:
   - 'Mithun Ayachit <mithun@cpan.org>'
-build_requires: {}
+build_requires:
+  Test::More: 0
+  version: 0
 configure_requires:
   Module::Build: 0.38
 dynamic_config: 1
-generated_by: 'Module::Build version 0.38, CPAN::Meta::Converter version 2.112150'
+generated_by: 'Module::Build version 0.38, CPAN::Meta::Converter version 2.112621'
 license: perl
 meta-spec:
   url: http://module-build.sourceforge.net/META-spec-v1.4.html
@@ -15,14 +17,13 @@ name: URI-Encode
 provides:
   URI::Encode:
     file: lib/URI/Encode.pm
-    version: 0.04
+    version: 0.05
 requires:
   Encode: 2.12
-  Test::More: 0
   perl: v5.8.1
-  version: 0
 resources:
-  homepage: https://metacpan.org/module/URI::Encode
+  bugtracker: http://rt.cpan.org/Public/Dist/Display.html?Name=URI-Encode
+  homepage: https://github.com/mithun/perl-uri-encode
   license: http://dev.perl.org/licenses/
-  repository: http://github.com/mithun/perl-uri-encode
-version: 0.04
+  repository: git://github.com/mithun/perl-uri-encode.git
+version: 0.05

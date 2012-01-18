@@ -1,25 +1,46 @@
+#!perl
+
+####################
+# LOAD MODULES
+####################
 use strict;
-use warnings;
+use warnings FATAL => 'all';
 use Module::Build;
 
+# Autoflush ON
+local $| = 1;
+
+####################
+# INIT BUILDER
+####################
+
 my $builder = Module::Build->new(
-    module_name       => 'URI::Encode',
-    license           => 'perl',
-    dist_author       => 'Mithun Ayachit <mithun@cpan.org>',
-    dist_version_from => 'lib/URI/Encode.pm',
-    requires          => {
-        'perl'       => '5.8.1',  # for Unicode support
+    module_name        => 'URI::Encode',
+    license            => 'perl',
+    dist_author        => 'Mithun Ayachit <mithun@cpan.org>',
+    configure_requires => { 'Module::Build' => 0.38 },
+    build_requires     => {
         'Test::More' => 0,
         'version'    => 0,
-        'Encode'     => '2.12',
     },
-    add_to_cleanup => ['URI-Encode-*'],
-    meta_merge     => {
+    requires => {
+        'perl'   => '5.8.1',  # for Unicode support
+        'Encode' => '2.12',
+    },
+    add_to_cleanup     => ['URI-Encode-*'],
+    create_license     => 1,
+    create_makefile_pl => 'traditional',
+    meta_merge         => {
         resources => {
-            homepage   => 'https://metacpan.org/module/URI::Encode',
-            repository => 'http://github.com/mithun/perl-uri-encode',
+            bugtracker =>
+                'http://rt.cpan.org/Public/Dist/Display.html?Name=URI-Encode',
+            repository => 'git://github.com/mithun/perl-uri-encode.git',
+            homepage   => 'https://github.com/mithun/perl-uri-encode',
         },
     },
 );
 
+####################
+# CREATE BUILD SCRIPT
+####################
 $builder->create_build_script();

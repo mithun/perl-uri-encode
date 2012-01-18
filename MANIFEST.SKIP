@@ -4,10 +4,8 @@
 ~$
 \.bak$
 ^MANIFEST\.SKIP$
-CVS
-.git
-\.tmp$
-ignore.txt
+^\.git
 \.DS_Store$
 ^MYMETA.yml$
 ^MYMETA\.json$
+\.mkdn$

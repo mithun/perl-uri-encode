@@ -1,0 +1,28 @@
+% Version History for URI-Encode
+% Mithun Ayachit
+
+---------------------
+
+# 0.05
+
+- Store character maps in object
+- Update repo format
+
+# 0.04
+
+- Allow strings to be '0' (literally). See RT #70628
+- Added option in constructor to  set reserved encoding
+
+# 0.03
+
+- Minimum perl 5.8.1
+
+# 0.02
+
+- Corrected POD
+
+# 0.01
+
+- Initial release
+
+---------------------
