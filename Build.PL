@@ -31,6 +31,7 @@ my $builder = Module::Build->new(
     create_license     => 1,
     create_makefile_pl => 'traditional',
     meta_merge         => {
+        keywords  => [qw(uri escape encode percent)],
         resources => {
             bugtracker =>
                 'http://rt.cpan.org/Public/Dist/Display.html?Name=URI-Encode',

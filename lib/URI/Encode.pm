@@ -12,7 +12,7 @@ use Carp qw(croak carp);
 #######################
 # VERSION
 #######################
-our $VERSION = '0.06';
+our $VERSION = '0.061';
 
 #######################
 # EXPORT
@@ -155,8 +155,12 @@ to encode strings (mainly URLs) into a format which can be pasted into a plain
 text emails, and that those links are 'click-able' by the person reading that
 email. This can be accomplished by NOT encoding the reserved characters.
 
+This module can also be useful when using L<HTTP::Tiny> to ensure the URLs are properly escaped.
+
 If you are looking for speed and want to encode reserved characters, use
 L<URI::Escape::XS>
+
+See L<this script|https://github.com/mithun/perl-uri-encode/raw/master/.author/benchmark.pl> for a comparison on encoding results and performance.
 
 =head1 METHODS
 
