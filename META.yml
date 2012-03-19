@@ -8,7 +8,12 @@ build_requires:
 configure_requires:
   Module::Build: 0.38
 dynamic_config: 1
-generated_by: 'Module::Build version 0.38, CPAN::Meta::Converter version 2.112621'
+generated_by: 'Module::Build version 0.4, CPAN::Meta::Converter version 2.120630'
+keywords:
+  - uri
+  - escape
+  - encode
+  - percent
 license: perl
 meta-spec:
   url: http://module-build.sourceforge.net/META-spec-v1.4.html
@@ -17,7 +22,7 @@ name: URI-Encode
 provides:
   URI::Encode:
     file: lib/URI/Encode.pm
-    version: 0.06
+    version: 0.061
 requires:
   Encode: 2.12
   perl: v5.8.1
@@ -26,4 +31,4 @@ resources:
   homepage: https://github.com/mithun/perl-uri-encode
   license: http://dev.perl.org/licenses/
   repository: git://github.com/mithun/perl-uri-encode.git
-version: 0.06
+version: 0.061

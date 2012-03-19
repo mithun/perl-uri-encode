@@ -2,7 +2,11 @@ Version History for URI-Encode
 Mithun Ayachit
 
 
-* * * * *
+0.061
+=====
+
+-   POD updates
+-   Added a benchmark script
 
 0.06
 ====
