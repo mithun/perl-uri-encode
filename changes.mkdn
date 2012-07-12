@@ -1,6 +1,11 @@
 % Version History for URI-Encode
 % Mithun Ayachit
 
+# 0.07
+
+- Fix issue where '%' was not being encoded unless `encode_reserved` was requested [RT #78314]
+- Introduce option to NOT encode an already encoded string/URL
+
 # 0.061
 
 - POD updates
