@@ -50,8 +50,10 @@ sub new {
         encode_reserved => 0,
 
         #   Allow Double encoding?
+        #   defaults to YES
         double_encode => 1,
     };
+
     if   ( ref $in[0] eq 'HASH' ) { $input = $in[0]; }
     else                          { $input = {@in}; }
 
@@ -72,14 +74,26 @@ sub new {
 # ENCODE
 #######################
 sub encode {
-    my ( $self, $data, $reserved_flag ) = @_;
+    my ( $self, $data, $options ) = @_;
 
     # Check for data
     # Allow to be '0'
     return unless defined $data;
 
-    my $enc_res = $reserved_flag || $self->{encode_reserved};
+    my $enc_res       = $self->{encode_reserved};
     my $double_encode = $self->{double_encode};
+
+    if ( defined $options ) {
+        if ( ref $options eq 'HASH' ) {
+            $enc_res = $options->{encode_reserved}
+                if exists $options->{encode_reserved};
+            $double_encode = $options->{double_encode}
+                if exists $options->{double_encode};
+        } ## end if ( ref $options eq 'HASH')
+        else {
+            $enc_res = $options;
+        }
+    } ## end if ( defined $options )
 
     # UTF-8 encode
     $data = Encode::encode( 'utf-8-strict', $data );
@@ -221,10 +235,11 @@ If true, L</"Reserved Characters"> are also encoded. Defaults to false.
 
 	my $encoder = URI::Encode->new({double_encode => 1});
 
-If true, characters that are already percent-encoded will not be encoded again. Defaults to true.
+If true, characters that are already percent-encoded will not be encoded again.
+Defaults to true.
 
     my $encoder = URI::Encode->new({double_encode => 0});
-    print $encoder->encode('http://perl.com/foo%20bar'); # Still prints http://perl.com/foo%20bar
+    print $encoder->encode('http://perl.com/foo%20bar'); # prints http://perl.com/foo%20bar
 
 =back
 
