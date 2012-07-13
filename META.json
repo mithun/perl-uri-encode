@@ -4,7 +4,7 @@
       "Mithun Ayachit <mithun@cpan.org>"
    ],
    "dynamic_config" : 1,
-   "generated_by" : "Module::Build version 0.4, CPAN::Meta::Converter version 2.120630",
+   "generated_by" : "Module::Build version 0.4001, CPAN::Meta::Converter version 2.120921",
    "keywords" : [
       "uri",
       "escape",
@@ -41,7 +41,7 @@
    "provides" : {
       "URI::Encode" : {
          "file" : "lib/URI/Encode.pm",
-         "version" : "0.061"
+         "version" : "0.07"
       }
    },
    "release_status" : "stable",
@@ -57,5 +57,5 @@
          "url" : "git://github.com/mithun/perl-uri-encode.git"
       }
    },
-   "version" : "0.061"
+   "version" : "0.07"
 }
