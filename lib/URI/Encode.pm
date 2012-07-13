@@ -225,15 +225,13 @@ The following options can be passed to the constructor
 
 =over
 
-=item C<encode_reserved>
-
+=item encode_reserved
 
 	my $encoder = URI::Encode->new({encode_reserved => 0});
 
 If true, L</"Reserved Characters"> are also encoded. Defaults to false.
 
-=item C<double_encode>
-
+=item double_encode
 
 	my $encoder = URI::Encode->new({double_encode => 1});
 
