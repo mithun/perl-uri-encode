@@ -46,14 +46,14 @@ Creates a new object, no arguments are required
 
 The following options can be passed to the constructor
 
--   `encode_reserved`
+-   encode\_reserved
 
     my \$encoder = URI::Encode-\>new({encode\_reserved =\> 0});
 
 If true, ["Reserved Characters"](#Reserved%20Characters) are also
 encoded. Defaults to false.
 
--   `double_encode`
+-   double\_encode
 
     my \$encoder = URI::Encode-\>new({double\_encode =\> 1});
 
