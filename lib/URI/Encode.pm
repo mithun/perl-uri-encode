@@ -225,13 +225,15 @@ The following options can be passed to the constructor
 
 =over
 
-=item encode_reserved
+=item C<encode_reserved>
+
 
 	my $encoder = URI::Encode->new({encode_reserved => 0});
 
 If true, L</"Reserved Characters"> are also encoded. Defaults to false.
 
-=item double_encode
+=item C<double_encode>
+
 
 	my $encoder = URI::Encode->new({double_encode => 1});
 
@@ -243,7 +245,7 @@ Defaults to true.
 
 =back
 
-=head2 encode($url, $including_reserved)
+=head2 C<encode($url, $including_reserved)>
 
 This method encodes the URL provided. The method does not encode any
 L</"Reserved Characters"> unless C<$including_reserved> is true or set in the
@@ -253,7 +255,7 @@ encoding.
 	$uri->encode("http://perl.com/foo bar");      # http://perl.com/foo%20bar
 	$uri->encode("http://perl.com/foo bar", 1);   # http%3A%2F%2Fperl.com%2Ffoo%20bar
 
-=head2 decode($url)
+=head2 C<decode($url)>
 
 This method decodes a 'percent' encoded URL. If you had encoded the URL using
 this module (or any other method), chances are that the URL was converted to
@@ -267,13 +269,9 @@ if required.
 The following functions are exported upon request. This provides a non-OOP
 interface
 
-=head2 uri_encode($url, $including_reserved)
+=head2 C<uri_encode($url, \%options)>
 
-See L</encode($url, $including_reserved)>
-
-=head2 uri_decode($url)
-
-See L</decode($url)>
+=head2 C<uri_decode($url)>
 
 =head1 CHARACTER CLASSES
 
@@ -283,7 +281,7 @@ The following characters are considered as reserved (L<RFC
 3986|http://tools.ietf.org/html/rfc3986>). They will be encoded only if
 requested.
 
-	 ! * ' ( ) ; : @ & = + $ , / ? % # [ ]
+	 ! * ' ( ) ; : @ & = + $ , / ? # [ ]
 
 =head2 Unreserved Characters
 
