@@ -2,6 +2,15 @@
 % Mithun Ayachit
 %
 
+# 0.08
+
+-   [RT \#80177] doh! double\_encode wasn't working at all. Fixed now.
+    Thanks DWRIGHT ...
+-   [RT \#80178] Do not reset default options when they (not all) are
+    passed to the constructor. Thanks DWRIGHT ...
+-   Updated some POD. Do not promote the old interface for setting
+    options
+
 # 0.07
 
 -   Fix issue where '%' was not being encoded unless `encode_reserved`

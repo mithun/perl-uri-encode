@@ -5,6 +5,7 @@ package URI::Encode;
 #######################
 use strict;
 use warnings FATAL => 'all';
+
 use 5.008001;
 use Encode qw();
 use Carp qw(croak carp);
@@ -12,7 +13,7 @@ use Carp qw(croak carp);
 #######################
 # VERSION
 #######################
-our $VERSION = '0.07';
+our $VERSION = '0.08';
 
 #######################
 # EXPORT
@@ -196,7 +197,7 @@ URI::Encode - Simple percent Encoding/Decoding
 
     # OOP Interface
     use URI::Encode;
-    my $uri = URI::Encode->new({encode_reserved =>0});
+    my $uri     = URI::Encode->new( { encode_reserved => 0 } );
     my $encoded = $uri->encode($data);
     my $decoded = $uri->decode($encoded);
 
@@ -205,20 +206,22 @@ URI::Encode - Simple percent Encoding/Decoding
     my $encoded = uri_encode($data);
     my $decoded = uri_decode($encoded);
 
+
 =head1 DESCRIPTION
 
 This modules provides simple URI (Percent) encoding/decoding
 
-The main purpose of this module (at least for me) was to provide an easy method
-to encode strings (mainly URLs) into a format which can be pasted into a plain
-text emails, and that those links are 'click-able' by the person reading that
-email. This can be accomplished by NOT encoding the reserved characters.
+The main purpose of this module (at least for me) was to provide an
+easy method to encode strings (mainly URLs) into a format which can be
+pasted into a plain text emails, and that those links are 'click-able'
+by the person reading that email. This can be accomplished by NOT
+encoding the reserved characters.
 
-This module can also be useful when using L<HTTP::Tiny> to ensure the URLs are
-properly escaped.
+This module can also be useful when using L<HTTP::Tiny> to ensure the
+URLs are properly escaped.
 
-If you are looking for speed and want to encode reserved characters, use
-L<URI::Escape::XS>
+If you are looking for speed and want to encode reserved characters,
+use L<URI::Escape::XS>
 
 See L<this
 script|https://github.com/mithun/perl-uri-encode/raw/master/.author/benchmark.pl>
@@ -246,41 +249,45 @@ If true, L</"Reserved Characters"> are also encoded. Defaults to false.
 
 	my $encoder = URI::Encode->new({double_encode => 1});
 
-If true, characters that are already percent-encoded will not be encoded again.
-Defaults to true.
+If false, characters that are already percent-encoded will not be
+encoded again. Defaults to true.
 
     my $encoder = URI::Encode->new({double_encode => 0});
     print $encoder->encode('http://perl.com/foo%20bar'); # prints http://perl.com/foo%20bar
 
 =back
 
-=head2 C<encode($url, $including_reserved)>
+=head2 C<encode($url, \%options)>
 
-This method encodes the URL provided. The method does not encode any
-L</"Reserved Characters"> unless C<$including_reserved> is true or set in the
-constructor. The $url provided is first converted into UTF-8 before percent
-encoding.
+This method encodes the URL provided. The C<$url> provided is first
+converted into UTF-8 before percent encoding. Options set in the
+constructor, or defaults, can be overrided by passing them as the
+(optional) second argument. Options passed must be a hashref.
 
-	$uri->encode("http://perl.com/foo bar");      # http://perl.com/foo%20bar
-	$uri->encode("http://perl.com/foo bar", 1);   # http%3A%2F%2Fperl.com%2Ffoo%20bar
+    $uri->encode("http://perl.com/foo bar");
+    $uri->encode( "http://perl.com/foo bar", { encode_reserved => 1 } );
 
 =head2 C<decode($url)>
 
-This method decodes a 'percent' encoded URL. If you had encoded the URL using
-this module (or any other method), chances are that the URL was converted to
-UTF-8 before 'percent' encoding. Be sure to check the format and convert back
-if required.
+This method decodes a 'percent' encoded URL. If you had encoded the URL
+using this module (or any other method), chances are that the URL was
+converted to UTF-8 before 'percent' encoding. Be sure to check the
+format and convert back if required.
 
-	$uri->decode("http%3A%2F%2Fperl.com%2Ffoo%20bar"); # "http://perl.com/foo bar"
+	$uri->decode("http%3A%2F%2Fperl.com%2Ffoo%20bar");
 
 =head1 EXPORTED FUNCTIONS
 
-The following functions are exported upon request. This provides a non-OOP
-interface
+The following functions are exported upon request. This provides a
+non-OOP interface
 
-=head2 C<uri_encode($url, \%options)>
+=over
 
-=head2 C<uri_decode($url)>
+=item C<uri_encode($url, \%options)>
+
+=item C<uri_decode($url)>
+
+=back
 
 =head1 CHARACTER CLASSES
 
@@ -294,7 +301,8 @@ requested.
 
 =head2 Unreserved Characters
 
-The following characters are considered as Unreserved. They will not be encoded
+The following characters are considered as Unreserved. They will not be
+encoded
 
 	a-z
 	A-Z
@@ -325,8 +333,8 @@ L<Tie::UrlEncoder>
 
 =head1 BUGS AND LIMITATIONS
 
-Please report any bugs or feature requests to C<bug-uri-encode@rt.cpan.org>, or
-through the web interface at
+Please report any bugs or feature requests to
+C<bug-uri-encode@rt.cpan.org>, or through the web interface at
 L<http://rt.cpan.org/Public/Dist/Display.html?Name=URI-Encode>
 
 =head1 AUTHOR
@@ -337,7 +345,7 @@ Mithun Ayachit C<mithun@cpan.org>
 
 Copyright (c) 2012, Mithun Ayachit. All rights reserved.
 
-This module is free software; you can redistribute it and/or modify it under
-the same terms as Perl itself. See L<perlartistic>.
+This module is free software; you can redistribute it and/or modify it
+under the same terms as Perl itself. See L<perlartistic>.
 
 =cut
