@@ -29,7 +29,12 @@ is( $uri->encode( $url, { encode_reserved => 1, } ),
 is( $uri->encode( $url, 1 ),
     $encoded_reserved, 'OOP: Reserved Encoding with scalar option' );
 is( $uri->encode( $encoded_reserved, { double_encode => 0, } ),
-    $encoded_reserved, 'OOP: Double encoding' );
+    $encoded_reserved, 'OOP: Double encoding OFF' );
+is(
+    $uri->encode( 'This is a %20 test', { double_encode => 1, } ),
+    'This%20is%20a%20%2520%20test',
+    'OOP: Double encoding ON'
+);
 is( Encode::decode( 'utf-8-strict', $uri->decode($encoded) ),
     $url, 'OOP: Decoding' );
 
@@ -39,9 +44,9 @@ is( uri_encode($url), $encoded, 'Function: Unreserved encoding' );
 is( uri_encode( $url, 1 ),
     $encoded_reserved, 'Function: Reserved encoding with scalar option' );
 is( uri_encode( $url, { encode_reserved => 1, } ),
-    $encoded_reserved, 'Function: Reserved encoding with scalar option' );
-is( uri_encode( $encoded_reserved, { double_encoding => 0, } ),
-    $encoded_reserved, 'Function: Double encoding' );
+    $encoded_reserved, 'Function: Reserved encoding with named option' );
+is( uri_encode( $encoded_reserved, { double_encode => 0, } ),
+    $encoded_reserved, 'Function: Double encoding OFF' );
 is( Encode::decode( 'utf-8-strict', uri_decode($encoded) ),
     $url, 'Function: Decoding' );
 

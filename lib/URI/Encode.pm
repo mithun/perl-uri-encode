@@ -43,7 +43,7 @@ sub new {
     my ( $class, @in ) = @_;
 
     # Check Input
-    my $input = {
+    my $defaults = {
 
         #   this module, unlike URI::Escape,
         #   does not encode reserved characters
@@ -54,19 +54,30 @@ sub new {
         double_encode => 1,
     };
 
+    my $input = {};
     if   ( ref $in[0] eq 'HASH' ) { $input = $in[0]; }
     else                          { $input = {@in}; }
 
-    # Encoding Map
-    $input->{enc_map}
-        = { ( map { chr($_) => sprintf( "%%%02X", $_ ) } ( 0 ... 255 ) ) };
+    # Set options
+    my $options = {
 
-    # Decoding Map
-    $input->{dec_map}
-        = { ( map { sprintf( "%02X", $_ ) => chr($_) } ( 0 ... 255 ) ) };
+        # Defaults
+        %{$defaults},
+
+        # Input
+        %{$input},
+
+        # Encoding Map
+        enc_map =>
+            { ( map { chr($_) => sprintf( "%%%02X", $_ ) } ( 0 ... 255 ) ) },
+
+        # Decoding Map
+        dec_map =>
+            { ( map { sprintf( "%02X", $_ ) => chr($_) } ( 0 ... 255 ) ) },
+    };
 
     # Return
-    my $self = bless $input, $class;
+    my $self = bless $options, $class;
     return $self;
 } ## end sub new
 
@@ -99,7 +110,7 @@ sub encode {
     $data = Encode::encode( 'utf-8-strict', $data );
 
     # Encode a literal '%'
-    if ($double_encode) { $data =~ s{\%}{$self->_get_encoded_char($1)}gex; }
+    if ($double_encode) { $data =~ s{(\%)}{$self->_get_encoded_char($1)}gex; }
     else { $data =~ s{(\%)}{$self->_encode_literal_percent($1, $')}gex; }
 
     # Percent Encode
