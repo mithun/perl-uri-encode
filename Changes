@@ -2,6 +2,12 @@ Version History for URI-Encode
 Mithun Ayachit
 
 
+0.09
+====
+
+-   [RT #83761] Lower-cased encoded characters were not being decoded.
+    Fixed now. Thanks David Arenillas ...
+
 0.08
 ====
 

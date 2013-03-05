@@ -22,7 +22,7 @@ name: URI-Encode
 provides:
   URI::Encode:
     file: lib/URI/Encode.pm
-    version: 0.08
+    version: 0.09
 requires:
   Encode: 2.12
   perl: v5.8.1
@@ -31,4 +31,4 @@ resources:
   homepage: https://github.com/mithun/perl-uri-encode
   license: http://dev.perl.org/licenses/
   repository: git://github.com/mithun/perl-uri-encode.git
-version: 0.08
+version: 0.09

@@ -48,21 +48,21 @@ The following options can be passed to the constructor
 
 - encode\_reserved
 
-	my $encoder = URI::Encode->new({encode_reserved => 0});
+    	my $encoder = URI::Encode->new({encode_reserved => 0});
 
-If true, ["Reserved Characters"](#Reserved Characters) are also encoded. Defaults to false.
+    If true, ["Reserved Characters"](#Reserved Characters) are also encoded. Defaults to false.
 
 - double\_encode
 
-	my $encoder = URI::Encode->new({double_encode => 1});
+    	my $encoder = URI::Encode->new({double_encode => 1});
 
-If false, characters that are already percent-encoded will not be
-encoded again. Defaults to true.
+    If false, characters that are already percent-encoded will not be
+    encoded again. Defaults to true.
 
-    my $encoder = URI::Encode->new({double_encode => 0});
-    print $encoder->encode('http://perl.com/foo%20bar'); # prints http://perl.com/foo%20bar
+        my $encoder = URI::Encode->new({double_encode => 0});
+        print $encoder->encode('http://perl.com/foo%20bar'); # prints http://perl.com/foo%20bar
 
-## `encode($url, \\%options)`
+## `encode($url, \%options)`
 
 This method encodes the URL provided. The `$url` provided is first
 converted into UTF-8 before percent encoding. Options set in the

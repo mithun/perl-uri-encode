@@ -32,11 +32,11 @@ my $reserved_re = "^a-zA-Z0-9\-\_\.\~\!\*\'\(\)\;\:\@\&\=\+\$\,\/\?\%\#\[\]";
 
 print "Encoding URL: $url\n";
 print "Using URI::Escape ($URI::Escape::VERSION)\t-> "
-    . URI::Escape::uri_escape_utf8( $url, $reserved_re ) . "\n";
+  . URI::Escape::uri_escape_utf8( $url, $reserved_re ) . "\n";
 print "Using URI::Escape::XS ($URI::Escape::XS::VERSION)\t-> "
-    . URI::Escape::XS::uri_escape( $url, $reserved_re ) . "\n";
+  . URI::Escape::XS::uri_escape( $url, $reserved_re ) . "\n";
 print "Using URI::Encode ($URI::Encode::VERSION)\t-> "
-    . $obj_uri_encode->encode($url) . "\n";
+  . $obj_uri_encode->encode($url) . "\n";
 
 ####################
 # RUN BENCH
@@ -44,8 +44,7 @@ print "Using URI::Encode ($URI::Encode::VERSION)\t-> "
 print "\n\nBenchmarking $num_of_iters iterations on Perl $] ($^O)\n\n";
 
 cmpthese(
-    $num_of_iters,
-    {
+    $num_of_iters, {
         'URI::Escape' => sub {
             URI::Escape::uri_escape_utf8( $url, $reserved_re );
         },
