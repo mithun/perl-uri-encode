@@ -2,6 +2,11 @@
 % Mithun Ayachit
 %
 
+# 0.09
+
+-   [RT \#83761] Lower-cased encoded characters were not being decoded.
+    Fixed now. Thanks David Arenillas ...
+
 # 0.08
 
 -   [RT \#80177] doh! double\_encode wasn't working at all. Fixed now.

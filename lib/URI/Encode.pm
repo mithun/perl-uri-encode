@@ -13,7 +13,7 @@ use Carp qw(croak carp);
 #######################
 # VERSION
 #######################
-our $VERSION = '0.08';
+our $VERSION = '0.09';
 
 #######################
 # EXPORT
