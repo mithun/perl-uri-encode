@@ -33,8 +33,7 @@ my $builder = Module::Build->new(
     meta_merge         => {
         keywords  => [qw(uri escape encode percent)],
         resources => {
-            bugtracker =>
-                'http://rt.cpan.org/Public/Dist/Display.html?Name=URI-Encode',
+            bugtracker => 'http://rt.cpan.org/Public/Dist/Display.html?Name=URI-Encode',
             repository => 'git://github.com/mithun/perl-uri-encode.git',
             homepage   => 'https://github.com/mithun/perl-uri-encode',
         },

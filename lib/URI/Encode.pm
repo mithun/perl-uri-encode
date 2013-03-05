@@ -29,7 +29,7 @@ our (@EXPORT_OK);
 
 # Reserved characters
 my $reserved_re
-    = qr{([^a-zA-Z0-9\-\_\.\~\!\*\'\(\)\;\:\@\&\=\+\$\,\/\?\#\[\]\%])}x;
+  = qr{([^a-zA-Z0-9\-\_\.\~\!\*\'\(\)\;\:\@\&\=\+\$\,\/\?\#\[\]\%])}x;
 
 # Un-reserved characters
 my $unreserved_re = qr{([^a-zA-Z0-9\Q-_.~\E\%])}x;
@@ -69,17 +69,15 @@ sub new {
         %{$input},
 
         # Encoding Map
-        enc_map =>
-            { ( map { chr($_) => sprintf( "%%%02X", $_ ) } ( 0 ... 255 ) ) },
+        enc_map => { ( map { chr($_) => sprintf( "%%%02X", $_ ) } ( 0 ... 255 ) ) },
 
         # Decoding Map
-        dec_map =>
-            { ( map { sprintf( "%02X", $_ ) => chr($_) } ( 0 ... 255 ) ) },
+        dec_map => { ( map { sprintf( "%02X", $_ ) => chr($_) } ( 0 ... 255 ) ), },
     };
 
     # Return
     my $self = bless $options, $class;
-    return $self;
+  return $self;
 } ## end sub new
 
 #######################
@@ -90,17 +88,16 @@ sub encode {
 
     # Check for data
     # Allow to be '0'
-    return unless defined $data;
+  return unless defined $data;
 
     my $enc_res       = $self->{encode_reserved};
     my $double_encode = $self->{double_encode};
 
     if ( defined $options ) {
         if ( ref $options eq 'HASH' ) {
-            $enc_res = $options->{encode_reserved}
-                if exists $options->{encode_reserved};
+            $enc_res = $options->{encode_reserved} if exists $options->{encode_reserved};
             $double_encode = $options->{double_encode}
-                if exists $options->{double_encode};
+              if exists $options->{double_encode};
         } ## end if ( ref $options eq 'HASH')
         else {
             $enc_res = $options;
@@ -123,7 +120,7 @@ sub encode {
     }
 
     # Done
-    return $data;
+  return $data;
 } ## end sub encode
 
 #######################
@@ -134,12 +131,12 @@ sub decode {
 
     # Check for data
     # Allow to be '0'
-    return unless defined $data;
+  return unless defined $data;
 
     # Percent Decode
     $data =~ s{$encoded_chars}{ $self->_get_decoded_char($1) }gex;
 
-    return $data;
+  return $data;
 } ## end sub decode
 
 #######################
@@ -156,28 +153,31 @@ sub uri_decode { return __PACKAGE__->new()->decode(@_); }
 # INTERNAL
 #######################
 
+
 sub _get_encoded_char {
     my ( $self, $char ) = @_;
-    return $self->{enc_map}->{$char} if exists $self->{enc_map}->{$char};
-    return $char;
-}
+  return $self->{enc_map}->{$char} if exists $self->{enc_map}->{$char};
+  return $char;
+} ## end sub _get_encoded_char
+
 
 sub _encode_literal_percent {
     my ( $self, $char, $post ) = @_;
-    return $self->_get_encoded_char($char) if not defined $post;
+  return $self->_get_encoded_char($char) if not defined $post;
     if ( $post =~ m{^([a-fA-F0-9]{2})}x ) {
-        return $self->_get_encoded_char($char)
-            unless exists $self->{dec_map}->{$1};
-        return $char;
-    }
-    return $self->_get_encoded_char($char);
+      return $self->_get_encoded_char($char) unless exists $self->{dec_map}->{$1};
+      return $char;
+    } ## end if ( $post =~ m{^([a-fA-F0-9]{2})}x)
+  return $self->_get_encoded_char($char);
 } ## end sub _encode_literal_percent
+
 
 sub _get_decoded_char {
     my ( $self, $char ) = @_;
-    return $self->{dec_map}->{$char} if exists $self->{dec_map}->{$char};
-    return $char;
-}
+  return $self->{dec_map}->{ uc($char) }
+      if exists $self->{dec_map}->{ uc($char) };
+  return $char;
+} ## end sub _get_decoded_char
 
 #######################
 1;
