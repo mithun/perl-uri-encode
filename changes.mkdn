@@ -1,6 +1,13 @@
-% Version History for URI-Encode
-% Mithun Ayachit
-%
+---
+author:
+- Mithun Ayachit
+title: 'Version History for URI-Encode'
+...
+
+# 0.9.1
+
+-   No functional changes. Use semver and move bugtracker to
+    github-issues
 
 # 0.09
 
@@ -53,4 +60,4 @@
 
 -   Initial release
 
-* * * * *
+------------------------------------------------------------------------

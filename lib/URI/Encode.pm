@@ -13,7 +13,7 @@ use Carp qw(croak carp);
 #######################
 # VERSION
 #######################
-our $VERSION = '0.09';
+our $VERSION = '0.9.1';
 
 #######################
 # EXPORT
@@ -69,10 +69,12 @@ sub new {
         %{$input},
 
         # Encoding Map
-        enc_map => { ( map { chr($_) => sprintf( "%%%02X", $_ ) } ( 0 ... 255 ) ) },
+        enc_map =>
+          { ( map { chr($_) => sprintf( "%%%02X", $_ ) } ( 0 ... 255 ) ) },
 
         # Decoding Map
-        dec_map => { ( map { sprintf( "%02X", $_ ) => chr($_) } ( 0 ... 255 ) ), },
+        dec_map =>
+          { ( map { sprintf( "%02X", $_ ) => chr($_) } ( 0 ... 255 ) ), },
     };
 
     # Return
@@ -95,7 +97,8 @@ sub encode {
 
     if ( defined $options ) {
         if ( ref $options eq 'HASH' ) {
-            $enc_res = $options->{encode_reserved} if exists $options->{encode_reserved};
+            $enc_res = $options->{encode_reserved}
+              if exists $options->{encode_reserved};
             $double_encode = $options->{double_encode}
               if exists $options->{double_encode};
         } ## end if ( ref $options eq 'HASH')
@@ -165,7 +168,8 @@ sub _encode_literal_percent {
     my ( $self, $char, $post ) = @_;
   return $self->_get_encoded_char($char) if not defined $post;
     if ( $post =~ m{^([a-fA-F0-9]{2})}x ) {
-      return $self->_get_encoded_char($char) unless exists $self->{dec_map}->{$1};
+      return $self->_get_encoded_char($char)
+          unless exists $self->{dec_map}->{$1};
       return $char;
     } ## end if ( $post =~ m{^([a-fA-F0-9]{2})}x)
   return $self->_get_encoded_char($char);
@@ -233,7 +237,7 @@ for a comparison on encoding results and performance.
 
 Creates a new object, no arguments are required
 
-	my $encoder = URI::Encode->new(\%options);
+    my $encoder = URI::Encode->new(\%options);
 
 The following options can be passed to the constructor
 
@@ -241,13 +245,13 @@ The following options can be passed to the constructor
 
 =item encode_reserved
 
-	my $encoder = URI::Encode->new({encode_reserved => 0});
+    my $encoder = URI::Encode->new({encode_reserved => 0});
 
 If true, L</"Reserved Characters"> are also encoded. Defaults to false.
 
 =item double_encode
 
-	my $encoder = URI::Encode->new({double_encode => 1});
+    my $encoder = URI::Encode->new({double_encode => 1});
 
 If false, characters that are already percent-encoded will not be
 encoded again. Defaults to true.
@@ -274,7 +278,7 @@ using this module (or any other method), chances are that the URL was
 converted to UTF-8 before 'percent' encoding. Be sure to check the
 format and convert back if required.
 
-	$uri->decode("http%3A%2F%2Fperl.com%2Ffoo%20bar");
+    $uri->decode("http%3A%2F%2Fperl.com%2Ffoo%20bar");
 
 =head1 EXPORTED FUNCTIONS
 
@@ -297,17 +301,17 @@ The following characters are considered as reserved (L<RFC
 3986|http://tools.ietf.org/html/rfc3986>). They will be encoded only if
 requested.
 
-	 ! * ' ( ) ; : @ & = + $ , / ? # [ ]
+     ! * ' ( ) ; : @ & = + $ , / ? # [ ]
 
 =head2 Unreserved Characters
 
 The following characters are considered as Unreserved. They will not be
 encoded
 
-	a-z
-	A-Z
-	0-9
-	- _ . ~
+    a-z
+    A-Z
+    0-9
+    - _ . ~
 
 =head1 DEPENDENCIES
 
@@ -333,9 +337,8 @@ L<Tie::UrlEncoder>
 
 =head1 BUGS AND LIMITATIONS
 
-Please report any bugs or feature requests to
-C<bug-uri-encode@rt.cpan.org>, or through the web interface at
-L<http://rt.cpan.org/Public/Dist/Display.html?Name=URI-Encode>
+Please report any bugs or feature requests at
+L<https://github.com/mithun/perl-uri-encode/issues>
 
 =head1 AUTHOR
 
@@ -343,7 +346,7 @@ Mithun Ayachit C<mithun@cpan.org>
 
 =head1 LICENSE AND COPYRIGHT
 
-Copyright (c) 2012, Mithun Ayachit. All rights reserved.
+Copyright (c) 2014, Mithun Ayachit. All rights reserved.
 
 This module is free software; you can redistribute it and/or modify it
 under the same terms as Perl itself. See L<perlartistic>.

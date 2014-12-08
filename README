@@ -1,10 +1,14 @@
+
+
 NAME
-====
+
 
 URI::Encode - Simple percent Encoding/Decoding
 
+
+
 SYNOPSIS
-========
+
 
     # OOP Interface
     use URI::Encode;
@@ -17,8 +21,10 @@ SYNOPSIS
     my $encoded = uri_encode($data);
     my $decoded = uri_decode($encoded);
 
+
+
 DESCRIPTION
-===========
+
 
 This modules provides simple URI (Percent) encoding/decoding
 
@@ -36,11 +42,12 @@ URI::Escape::XS
 
 See this script for a comparison on encoding results and performance.
 
+
+
 METHODS
-=======
+
 
 new()
------
 
 Creates a new object, no arguments are required
 
@@ -64,8 +71,8 @@ The following options can be passed to the constructor
         my $encoder = URI::Encode->new({double_encode => 0});
         print $encoder->encode('http://perl.com/foo%20bar'); # prints http://perl.com/foo%20bar
 
+
 encode($url, \%options)
------------------------
 
 This method encodes the URL provided. The $url provided is first
 converted into UTF-8 before percent encoding. Options set in the
@@ -75,8 +82,8 @@ constructor, or defaults, can be overrided by passing them as the
     $uri->encode("http://perl.com/foo bar");
     $uri->encode( "http://perl.com/foo bar", { encode_reserved => 1 } );
 
+
 decode($url)
-------------
 
 This method decodes a 'percent' encoded URL. If you had encoded the URL
 using this module (or any other method), chances are that the URL was
@@ -85,8 +92,10 @@ format and convert back if required.
 
     $uri->decode("http%3A%2F%2Fperl.com%2Ffoo%20bar");
 
+
+
 EXPORTED FUNCTIONS
-==================
+
 
 The following functions are exported upon request. This provides a
 non-OOP interface
@@ -94,19 +103,20 @@ non-OOP interface
 -   uri_encode($url, \%options)
 -   uri_decode($url)
 
+
+
 CHARACTER CLASSES
-=================
+
 
 Reserved Characters
--------------------
 
 The following characters are considered as reserved (RFC 3986). They
 will be encoded only if requested.
 
      ! * ' ( ) ; : @ & = + $ , / ? # [ ]
 
+
 Unreserved Characters
----------------------
 
 The following characters are considered as Unreserved. They will not be
 encoded
@@ -116,20 +126,26 @@ encoded
     0-9
     - _ . ~
 
+
+
 DEPENDENCIES
-============
+
 
 Encode
 
+
+
 ACKNOWLEDGEMENTS
-================
+
 
 Gisle Aas for URI::Escape
 
 David Nicol for Tie::UrlEncoder
 
+
+
 SEE ALSO
-========
+
 
 RFC 3986
 
@@ -141,22 +157,27 @@ URI::Escape::JavaScript
 
 Tie::UrlEncoder
 
-BUGS AND LIMITATIONS
-====================
 
-Please report any bugs or feature requests to
-bug-uri-encode@rt.cpan.org, or through the web interface at
-http://rt.cpan.org/Public/Dist/Display.html?Name=URI-Encode
+
+BUGS AND LIMITATIONS
+
+
+Please report any bugs or feature requests at
+https://github.com/mithun/perl-uri-encode/issues
+
+
 
 AUTHOR
-======
+
 
 Mithun Ayachit mithun@cpan.org
 
-LICENSE AND COPYRIGHT
-=====================
 
-Copyright (c) 2012, Mithun Ayachit. All rights reserved.
+
+LICENSE AND COPYRIGHT
+
+
+Copyright (c) 2014, Mithun Ayachit. All rights reserved.
 
 This module is free software; you can redistribute it and/or modify it
 under the same terms as Perl itself. See perlartistic.

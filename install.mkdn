@@ -1,6 +1,8 @@
-% Installing URI-Encode
-% Mithun Ayachit
-%
+---
+author:
+- Mithun Ayachit
+title: 'Installing URI-Encode'
+...
 
 # Distribution page
 

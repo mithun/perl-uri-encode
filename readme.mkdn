@@ -15,8 +15,6 @@ URI::Encode - Simple percent Encoding/Decoding
     my $encoded = uri_encode($data);
     my $decoded = uri_decode($encoded);
 
-
-
 # DESCRIPTION
 
 This modules provides simple URI (Percent) encoding/decoding
@@ -27,13 +25,14 @@ pasted into a plain text emails, and that those links are 'click-able'
 by the person reading that email. This can be accomplished by NOT
 encoding the reserved characters.
 
-This module can also be useful when using [HTTP::Tiny](http://search.cpan.org/perldoc?HTTP::Tiny) to ensure the
+This module can also be useful when using [HTTP::Tiny](https://metacpan.org/pod/HTTP::Tiny) to ensure the
 URLs are properly escaped.
 
 If you are looking for speed and want to encode reserved characters,
-use [URI::Escape::XS](http://search.cpan.org/perldoc?URI::Escape::XS)
+use [URI::Escape::XS](https://metacpan.org/pod/URI::Escape::XS)
 
-See [this script](https://github.com/mithun/perl-uri-encode/raw/master/.author/benchmark.pl)
+See [this
+script](https://github.com/mithun/perl-uri-encode/raw/master/.author/benchmark.pl)
 for a comparison on encoding results and performance.
 
 # METHODS
@@ -42,19 +41,19 @@ for a comparison on encoding results and performance.
 
 Creates a new object, no arguments are required
 
-	my $encoder = URI::Encode->new(\%options);
+    my $encoder = URI::Encode->new(\%options);
 
 The following options can be passed to the constructor
 
 - encode\_reserved
 
-    	my $encoder = URI::Encode->new({encode_reserved => 0});
+        my $encoder = URI::Encode->new({encode_reserved => 0});
 
-    If true, ["Reserved Characters"](#Reserved Characters) are also encoded. Defaults to false.
+    If true, ["Reserved Characters"](#reserved-characters) are also encoded. Defaults to false.
 
 - double\_encode
 
-    	my $encoder = URI::Encode->new({double_encode => 1});
+        my $encoder = URI::Encode->new({double_encode => 1});
 
     If false, characters that are already percent-encoded will not be
     encoded again. Defaults to true.
@@ -79,7 +78,7 @@ using this module (or any other method), chances are that the URL was
 converted to UTF-8 before 'percent' encoding. Be sure to check the
 format and convert back if required.
 
-	$uri->decode("http%3A%2F%2Fperl.com%2Ffoo%20bar");
+    $uri->decode("http%3A%2F%2Fperl.com%2Ffoo%20bar");
 
 # EXPORTED FUNCTIONS
 
@@ -93,48 +92,48 @@ non-OOP interface
 
 ## Reserved Characters
 
-The following characters are considered as reserved ([RFC 3986](http://tools.ietf.org/html/rfc3986)). They will be encoded only if
+The following characters are considered as reserved ([RFC
+3986](http://tools.ietf.org/html/rfc3986)). They will be encoded only if
 requested.
 
-	 ! * ' ( ) ; : @ & = + $ , / ? # [ ]
+     ! * ' ( ) ; : @ & = + $ , / ? # [ ]
 
 ## Unreserved Characters
 
 The following characters are considered as Unreserved. They will not be
 encoded
 
-	a-z
-	A-Z
-	0-9
-	- _ . ~
+    a-z
+    A-Z
+    0-9
+    - _ . ~
 
 # DEPENDENCIES
 
-[Encode](http://search.cpan.org/perldoc?Encode)
+[Encode](https://metacpan.org/pod/Encode)
 
 # ACKNOWLEDGEMENTS
 
-Gisle Aas for [URI::Escape](http://search.cpan.org/perldoc?URI::Escape)
+Gisle Aas for [URI::Escape](https://metacpan.org/pod/URI::Escape)
 
-David Nicol for [Tie::UrlEncoder](http://search.cpan.org/perldoc?Tie::UrlEncoder)
+David Nicol for [Tie::UrlEncoder](https://metacpan.org/pod/Tie::UrlEncoder)
 
 # SEE ALSO
 
 [RFC 3986](http://tools.ietf.org/html/rfc3986)
 
-[URI::Escape](http://search.cpan.org/perldoc?URI::Escape)
+[URI::Escape](https://metacpan.org/pod/URI::Escape)
 
-[URI::Escape::XS](http://search.cpan.org/perldoc?URI::Escape::XS)
+[URI::Escape::XS](https://metacpan.org/pod/URI::Escape::XS)
 
-[URI::Escape::JavaScript](http://search.cpan.org/perldoc?URI::Escape::JavaScript)
+[URI::Escape::JavaScript](https://metacpan.org/pod/URI::Escape::JavaScript)
 
-[Tie::UrlEncoder](http://search.cpan.org/perldoc?Tie::UrlEncoder)
+[Tie::UrlEncoder](https://metacpan.org/pod/Tie::UrlEncoder)
 
 # BUGS AND LIMITATIONS
 
-Please report any bugs or feature requests to
-`bug-uri-encode@rt.cpan.org`, or through the web interface at
-[http://rt.cpan.org/Public/Dist/Display.html?Name=URI-Encode](http://rt.cpan.org/Public/Dist/Display.html?Name=URI-Encode)
+Please report any bugs or feature requests at
+[https://github.com/mithun/perl-uri-encode/issues](https://github.com/mithun/perl-uri-encode/issues)
 
 # AUTHOR
 
@@ -142,7 +141,7 @@ Mithun Ayachit `mithun@cpan.org`
 
 # LICENSE AND COPYRIGHT
 
-Copyright (c) 2012, Mithun Ayachit. All rights reserved.
+Copyright (c) 2014, Mithun Ayachit. All rights reserved.
 
 This module is free software; you can redistribute it and/or modify it
-under the same terms as Perl itself. See [perlartistic](http://search.cpan.org/perldoc?perlartistic).
+under the same terms as Perl itself. See [perlartistic](https://metacpan.org/pod/perlartistic).
