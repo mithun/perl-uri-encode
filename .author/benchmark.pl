@@ -22,7 +22,7 @@ use Benchmark qw(cmpthese);
 ####################
 
 my $num_of_iters = '1000000';
-my $url          = 'http://www.google.com/search?q=Ingy dÃffÃ,Â¶t Net';
+my $url          = 'http://www.google.com/search?q=Ingy dÃfffÃf,Ã,Â¶t Net';
 
 # Objects
 my $obj_uri_encode = URI::Encode->new();
@@ -68,9 +68,9 @@ __END__
 
 Sample script output
 
-    Encoding URL: http://www.google.com/search?q=Ingy dÃffÃ,Â¶t Net
-    Using URI::Escape (3.31)    -> http://www.google.com/search?q=Ingy dÃffÃ,fÃf,Ã,Â¶t Net
-    Using URI::Escape::XS (0.08)-> http://www.google.com/search?q=Ingy dÃffÃ,Â¶t Net
+    Encoding URL: http://www.google.com/search?q=Ingy dÃfffÃf,Ã,Â¶t Net
+    Using URI::Escape (3.31)    -> http://www.google.com/search?q=Ingy dÃfffÃf,fÃff,Ãf,Ã,Â¶t Net
+    Using URI::Escape::XS (0.08)-> http://www.google.com/search?q=Ingy dÃfffÃf,Ã,Â¶t Net
     Using URI::Encode (0.06)    -> http://www.google.com/search?q=Ingy%20d%C3%83%C2%B6t%20Net
 
 
