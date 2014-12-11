@@ -197,6 +197,8 @@ __END__
 
 URI::Encode - Simple percent Encoding/Decoding
 
+=for HTML <a href="https://travis-ci.org/mithun/perl-uri-encode"><img src="https://travis-ci.org/mithun/perl-uri-encode.svg?branch=master"></a>
+
 =head1 SYNOPSIS
 
     # OOP Interface
