@@ -4,6 +4,10 @@ author:
 title: 'Version History for URI-Encode'
 ...
 
+# 1.1.0
+
+-   Stop using `$'` [Github Issue \#3]
+
 # 1.0.1
 
 -   Bump version to allow change in version number strategy

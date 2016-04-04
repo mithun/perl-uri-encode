@@ -13,7 +13,7 @@ use Carp qw(croak carp);
 #######################
 # VERSION
 #######################
-our $VERSION = '1.0.1';
+our $VERSION = '1.1.0';
 
 #######################
 # EXPORT
@@ -112,7 +112,7 @@ sub encode {
 
     # Encode a literal '%'
     if ($double_encode) { $data =~ s{(\%)}{$self->_get_encoded_char($1)}gex; }
-    else { $data =~ s{(\%)}{$self->_encode_literal_percent($1, $')}gex; }
+    else { $data =~ s{(\%)(.*)}{$self->_encode_literal_percent($1, $2)}gex; }
 
     # Percent Encode
     if ($enc_res) {
@@ -166,13 +166,18 @@ sub _get_encoded_char {
 
 sub _encode_literal_percent {
     my ( $self, $char, $post ) = @_;
+
   return $self->_get_encoded_char($char) if not defined $post;
+
+    my $return_char;
     if ( $post =~ m{^([a-fA-F0-9]{2})}x ) {
-      return $self->_get_encoded_char($char)
-          unless exists $self->{dec_map}->{$1};
-      return $char;
+        if ( exists $self->{dec_map}->{$1} ) {
+            $return_char = join( '', $char, $post );
+        }
     } ## end if ( $post =~ m{^([a-fA-F0-9]{2})}x)
-  return $self->_get_encoded_char($char);
+
+    $return_char ||= join( '', $self->_get_encoded_char($char), $post );
+  return $return_char;
 } ## end sub _encode_literal_percent
 
 
