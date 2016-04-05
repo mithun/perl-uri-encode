@@ -2,6 +2,10 @@
 
 URI::Encode - Simple percent Encoding/Decoding
 
+<div>
+    <a href="https://travis-ci.org/mithun/perl-uri-encode"><img src="https://travis-ci.org/mithun/perl-uri-encode.svg?branch=master"></a>
+</div>
+
 # SYNOPSIS
 
     # OOP Interface
@@ -28,8 +32,9 @@ encoding the reserved characters.
 This module can also be useful when using [HTTP::Tiny](https://metacpan.org/pod/HTTP::Tiny) to ensure the
 URLs are properly escaped.
 
-If you are looking for speed and want to encode reserved characters,
-use [URI::Escape::XS](https://metacpan.org/pod/URI::Escape::XS)
+**This module does not encode reserved characters by default**. If you
+are looking for speed and want to encode reserved characters, use
+[URI::Escape::XS](https://metacpan.org/pod/URI::Escape::XS)
 
 See [this
 script](https://github.com/mithun/perl-uri-encode/raw/master/.author/benchmark.pl)

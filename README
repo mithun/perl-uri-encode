@@ -5,6 +5,8 @@ NAME
 
 URI::Encode - Simple percent Encoding/Decoding
 
+    <a href="https://travis-ci.org/mithun/perl-uri-encode"><img src="https://travis-ci.org/mithun/perl-uri-encode.svg?branch=master"></a>
+
 
 
 SYNOPSIS
@@ -34,13 +36,15 @@ into a plain text emails, and that those links are 'click-able' by the
 person reading that email. This can be accomplished by NOT encoding the
 reserved characters.
 
-This module can also be useful when using HTTP::Tiny to ensure the URLs
-are properly escaped.
+This module can also be useful when using [HTTP::Tiny][] to ensure the
+URLs are properly escaped.
 
-If you are looking for speed and want to encode reserved characters, use
-URI::Escape::XS
+THIS MODULE DOES NOT ENCODE RESERVED CHARACTERS BY DEFAULT. If you are
+looking for speed and want to encode reserved characters, use
+[URI::Escape::XS][]
 
-See this script for a comparison on encoding results and performance.
+See [this script][] for a comparison on encoding results and
+performance.
 
 
 
@@ -59,7 +63,8 @@ The following options can be passed to the constructor
 
         my $encoder = URI::Encode->new({encode_reserved => 0});
 
-    If true, "Reserved Characters" are also encoded. Defaults to false.
+    If true, ["Reserved Characters"][] are also encoded. Defaults
+    to false.
 
 -   double_encode
 
@@ -110,7 +115,7 @@ CHARACTER CLASSES
 
 Reserved Characters
 
-The following characters are considered as reserved (RFC 3986). They
+The following characters are considered as reserved ([RFC 3986][]). They
 will be encoded only if requested.
 
      ! * ' ( ) ; : @ & = + $ , / ? # [ ]
@@ -131,31 +136,31 @@ encoded
 DEPENDENCIES
 
 
-Encode
+[Encode][]
 
 
 
 ACKNOWLEDGEMENTS
 
 
-Gisle Aas for URI::Escape
+Gisle Aas for [URI::Escape][]
 
-David Nicol for Tie::UrlEncoder
+David Nicol for [Tie::UrlEncoder][]
 
 
 
 SEE ALSO
 
 
-RFC 3986
+[RFC 3986][RFC 3986]
 
-URI::Escape
+[URI::Escape][]
 
-URI::Escape::XS
+[URI::Escape::XS][]
 
-URI::Escape::JavaScript
+[URI::Escape::JavaScript][]
 
-Tie::UrlEncoder
+[Tie::UrlEncoder][]
 
 
 
@@ -180,4 +185,15 @@ LICENSE AND COPYRIGHT
 Copyright (c) 2014, Mithun Ayachit. All rights reserved.
 
 This module is free software; you can redistribute it and/or modify it
-under the same terms as Perl itself. See perlartistic.
+under the same terms as Perl itself. See [perlartistic][].
+
+  [HTTP::Tiny]: https://metacpan.org/pod/HTTP::Tiny
+  [URI::Escape::XS]: https://metacpan.org/pod/URI::Escape::XS
+  [this script]: https://github.com/mithun/perl-uri-encode/raw/master/.author/benchmark.pl
+  ["Reserved Characters"]: #reserved-characters
+  [RFC 3986]: http://tools.ietf.org/html/rfc3986
+  [Encode]: https://metacpan.org/pod/Encode
+  [URI::Escape]: https://metacpan.org/pod/URI::Escape
+  [Tie::UrlEncoder]: https://metacpan.org/pod/Tie::UrlEncoder
+  [URI::Escape::JavaScript]: https://metacpan.org/pod/URI::Escape::JavaScript
+  [perlartistic]: https://metacpan.org/pod/perlartistic
