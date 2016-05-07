@@ -273,7 +273,7 @@ encoded again. Defaults to true.
 
 This method encodes the URL provided. The C<$url> provided is first
 converted into UTF-8 before percent encoding. Options set in the
-constructor, or defaults, can be overrided by passing them as the
+constructor, or defaults, can be overridden by passing them as the
 (optional) second argument. Options passed must be a hashref.
 
     $uri->encode("http://perl.com/foo bar");
