@@ -81,6 +81,12 @@ is(
 );
 is( Encode::decode( 'utf-8-strict', uri_decode($encoded) ),
     $url, 'Function: Decoding' );
+is( uri_encode('0'), '0', 'Encodes "0" input correctly');
+is( scalar uri_encode(undef), undef, 'Encodes undef to undef (scalar context)');
+is( scalar @{[ uri_encode(undef) ]}, 0, 'Encodes undef to empty list (list context)');
+is( uri_decode('0'), '0', 'Decodes "0" input correctly');
+is( scalar uri_decode(undef), undef, 'Decodes undef to undef (scalar context)');
+is( scalar @{[ uri_decode(undef) ]}, 0, 'Decodes undef to empty list (list context)');
 
 ## Test Lowercase & Uppercase decode
 is( $uri->decode('foo%2bbar'), 'foo+bar', 'Lower cased decoding' );
