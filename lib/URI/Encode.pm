@@ -37,6 +37,20 @@ my $unreserved_re = qr{([^a-zA-Z0-9\Q-_.~\E\%])}x;
 # Encoded character set
 my $encoded_chars = qr{%([a-fA-F0-9]{2})}x;
 
+# Encoding Map
+my %enc_map = (
+    map {
+        chr($_) => sprintf( "%%%02X", $_ )
+    } ( 0 ... 255 )
+);
+
+# Decoding Map
+my %dec_map = (
+    map {
+        sprintf( "%02X", $_ ) => chr($_)
+    } ( 0 ... 255 )
+);
+
 #######################
 # CONSTRUCTOR
 #######################
@@ -68,13 +82,6 @@ sub new {
         # Input
         %{$input},
 
-        # Encoding Map
-        enc_map =>
-          { ( map { chr($_) => sprintf( "%%%02X", $_ ) } ( 0 ... 255 ) ) },
-
-        # Decoding Map
-        dec_map =>
-          { ( map { sprintf( "%02X", $_ ) => chr($_) } ( 0 ... 255 ) ), },
     };
 
     # Return
@@ -159,7 +166,7 @@ sub uri_decode { return __PACKAGE__->new()->decode(@_); }
 
 sub _get_encoded_char {
     my ( $self, $char ) = @_;
-  return $self->{enc_map}->{$char} if exists $self->{enc_map}->{$char};
+  return $enc_map{$char} if exists $enc_map{$char};
   return $char;
 } ## end sub _get_encoded_char
 
@@ -171,7 +178,7 @@ sub _encode_literal_percent {
 
     my $return_char;
     if ( $post =~ m{^([a-fA-F0-9]{2})}x ) {
-        if ( exists $self->{dec_map}->{$1} ) {
+        if ( exists $dec_map{$1} ) {
             $return_char = join( '', $char, $post );
         }
     } ## end if ( $post =~ m{^([a-fA-F0-9]{2})}x)
@@ -183,8 +190,8 @@ sub _encode_literal_percent {
 
 sub _get_decoded_char {
     my ( $self, $char ) = @_;
-  return $self->{dec_map}->{ uc($char) }
-      if exists $self->{dec_map}->{ uc($char) };
+  return $dec_map{ uc($char) }
+      if exists $dec_map{ uc($char) };
   return $char;
 } ## end sub _get_decoded_char
 
