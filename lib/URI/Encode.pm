@@ -90,7 +90,7 @@ sub encode {
 
     # Check for data
     # Allow to be '0'
-  return unless defined $data;
+    return unless defined $data;
 
     my $enc_res       = $self->{encode_reserved};
     my $double_encode = $self->{double_encode};
@@ -134,7 +134,7 @@ sub decode {
 
     # Check for data
     # Allow to be '0'
-  return unless defined $data;
+    return unless defined $data;
 
     # Percent Decode
     $data =~ s{$encoded_chars}{ $self->_get_decoded_char($1) }gex;
