@@ -119,7 +119,7 @@ sub encode {
 
     # Encode a literal '%'
     if ($double_encode) { $data =~ s{(\%)}{$self->_get_encoded_char($1)}gex; }
-    else { $data =~ s{(\%)(.*)}{$self->_encode_literal_percent($1, $2)}gex; }
+    else { $data =~ s{(\%)(.{0,2})}{$self->_encode_literal_percent($1, $2)}gex; }
 
     # Percent Encode
     if ($enc_res) {
@@ -178,7 +178,7 @@ sub _encode_literal_percent {
 
     my $return_char;
     if ( $post =~ m{^([a-fA-F0-9]{2})}x ) {
-        if ( exists $dec_map{$1} ) {
+        if ( exists $dec_map{uc $1} ) {
             $return_char = join( '', $char, $post );
         }
     } ## end if ( $post =~ m{^([a-fA-F0-9]{2})}x)

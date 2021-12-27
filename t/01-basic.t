@@ -142,6 +142,28 @@ is( scalar @{[ uri_decode(undef) ]}, 0, 'Decodes undef to empty list (list conte
 is( $uri->decode('foo%2bbar'), 'foo+bar', 'Lower cased decoding' );
 is( $uri->decode('foo%2Bbar'), 'foo+bar', 'Upper cased decoding' );
 
+## Test lowercase & uppercase (double) encode
+is( $uri->encode('many %6d%6f%6f%6es ago'), 'many%20%256d%256f%256f%256es%20ago', 'Lower cased double encoding' );
+is( $uri->encode('many %6D%6F%6F%6Es ago'), 'many%20%256D%256F%256F%256Es%20ago', 'Upper cased double encoding' );
+is(
+    $uri->encode(
+        'many %6d%6f%6f%6es ago', {
+            double_encode => 0,
+        },
+    ),
+    'many%20%6d%6f%6f%6es%20ago',
+    'Lower cased non-double encoding'
+);
+is(
+    $uri->encode(
+        'many %6D%6F%6F%6Es ago', {
+            double_encode => 0,
+        },
+    ),
+    'many%20%6D%6F%6F%6Es%20ago',
+    'Lower cased non-double encoding'
+);
+
 ## Done
 done_testing();
 exit 0;
